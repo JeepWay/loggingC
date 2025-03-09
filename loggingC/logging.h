@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2025 JeepWay
+ *
+ * This library is free, you can redistribute and modify it
+ * under the MIT License, see logging.c for details.
+ */
+
 #ifndef LOG_H
 #define LOG_H
 
