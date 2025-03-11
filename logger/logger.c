@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-#include "logging.h"
+#include "logger.h"
 
 #include <assert.h>
 #include <string.h>
@@ -77,7 +77,7 @@ static int log_add_handler(const char *name, log_dump_fn dump_fn,
 {
     if (L.count == MAX_HANDLERS) {
         fprintf(DEFAULT_STRAEM,
-                "[LoggingC] Maximum number of handlers reached: %d\n",
+                "[Logger C] Maximum number of handlers reached: %d\n",
                 MAX_HANDLERS);
         return -1;
     }
@@ -104,7 +104,7 @@ int log_add_file_handler(const char *filename, const char *filemode,
     FILE *fp = fopen(filename, filemode);
 
     if (!fp) {
-        fprintf(DEFAULT_STRAEM, "[LoggingC] Unable to open log file: %s\n",
+        fprintf(DEFAULT_STRAEM, "[Logger C] Unable to open log file: %s\n",
                 filename);
         return -1;
     }
@@ -174,7 +174,7 @@ void _log_set_attribute(const char *name, const char *member, size_t offset,
 
     if (!strstr(modifiable_members, member)) {
         fprintf(DEFAULT_STRAEM,
-                "[LoggingC] Handler's member can't be modified: %s\n", member);
+                "[Logger C] Handler's member can't be modified: %s\n", member);
         return;
     }
 
@@ -184,7 +184,7 @@ void _log_set_attribute(const char *name, const char *member, size_t offset,
             return;
         }
     }
-    fprintf(DEFAULT_STRAEM, "[LoggingC] Handler's name not found: %s\n", name);
+    fprintf(DEFAULT_STRAEM, "[Logger C] Handler's name not found: %s\n", name);
 }
 
 void dump_log(record_t *rec)

@@ -4,7 +4,7 @@ CFLAGS = -Wall -g
 %.o: %.c
 	@$(CC) -c -o $@ $<
 
-main: main.o loggingC/logging.o
+main: main.o logger/logger.o
 	@$(CC) $(CFLAGS) -o $@.exe $^
 	@./$@.exe
 

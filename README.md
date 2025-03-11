@@ -1,10 +1,10 @@
-# LoggingC
+# Logger C
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) 
 
 ![root-default.png](fig/root-default.png)
 
-A lightweight, flexible logging library for the C language, inspired by [log4.c](https://github.com/rxi/log.c) project and Python's [logging](https://docs.python.org/3/library/logging.html) package. 
-LoggingC provides a simple yet powerful way to log messages with different levels, handlers, and formatting options. It supports both stream and file handlers, and customizable log formats.
+A lightweight, flexible logger library for the C language, inspired by [log4.c](https://github.com/rxi/log.c) project and Python's [logging](https://docs.python.org/3/library/logging.html) package. 
+This library provides a simple yet powerful way to log messages with different levels, handlers, and formatting options. It supports both stream and file handlers, and customizable log formats.
 
 ## Features
 - Default root handler (a stream handler) for immediate use, you don't need to create it.
@@ -16,13 +16,13 @@ LoggingC provides a simple yet powerful way to log messages with different level
 ## Simple Usage
 1. Clone or download the repository:
    ```bash
-   git clone https://github.com/JeepWay/loggingC.git
+   git clone https://github.com/JeepWay/logger-c.git
     ```
-2. Include the header file [logging.h](loggingC/logging.h) and source file [logging.c](loggingC/logging.c) in your project. The following is an example (main.c): 
+2. Include the header file [logger.h](logger/logger.h) and source file [logger.c](logger/logger.c) in your project. The following is an example (main.c): 
     ```cpp
     #include <stdio.h>
     #include <stdlib.h>
-    #include "loggingC/logging.h"
+    #include "logger/logger.h"
     int main(void)
     {
         log_trace("Trace message %d", 1);
@@ -36,14 +36,14 @@ LoggingC provides a simple yet powerful way to log messages with different level
     ```
 3. Compile your program with a C compiler (e.g., gcc), and execute it.
     ```bash
-    gcc -o main loggingC/logging.c main.c
+    gcc -o main logger/logger.c main.c
     ./main
     ```
 4. You will see the result in the console like the top picture.
 
 
 ## Basic Usage
-The following `DEFAULT` values are defined in [logging.h](loggingC/logging.h#L26). You can use them to set the default values for convenience, or you can specify your own values.
+The following `DEFAULT` values are defined in [logger.h](logger/logger.h#L26). You can use them to set the default values for convenience, or you can specify your own values.
 
 ### 1. Change default log level
 The default log level of root handler is `TRACE`. You can change the log level by using `log_set_level(char* name, size_t value)`, where `name` is the handler name and `value` is the log level.
@@ -59,9 +59,9 @@ The default setting only contains a stream handler (root handler). You can add a
 ```cpp
 log_add_file_handler(DEFAULT, DEFAULT, DEFAULT_LEVEL, "file1");
 // Equal to the following line
-log_add_file_handler("loggingC/program.log", "a", LOG_INFO, "file1");
+log_add_file_handler("logger/program.log", "a", LOG_INFO, "file1");
 ```
-And then you can see the log messages in the file `loggingC/program.log`.
+And then you can see the log messages in the file `logger/program.log`.
 
 ![file-default.png](fig/file-default.png)
 
@@ -96,7 +96,7 @@ log_set_date_fmt("root", "%Y/%m/%d %H:%M:%S");
 ![root-date3.png](fig/root-date3.png)
 
 ### 6. Change text format
-The default text format for stream is [color_fmt1](loggingC/logging.c#L201) function, for file is [no_color_fmt1](loggingC/logging.c#L215) function. 
+The default text format for stream is [color_fmt1](logger/logger.c#L201) function, for file is [no_color_fmt1](logger/logger.c#L215) function. 
 The avaliable text format function are `color_fmt1`, `color_fmt2`, `no_color_fmt1`, `no_color_fmt2`.
 You can change the text format by using `log_set_fmt_fn(char* name, log_fmt_t fmt)`, where `name` is the handler name and `fmt` is the function pointer to the text format function.
 ```cpp
@@ -126,7 +126,7 @@ log_set_fmt_fn("root", custom_fmt);
 ![root-custom-fmt.png](fig/root-custom-fmt.png)
 
 ### 7. Change dump log function
-The default dump log function is [dump_log](loggingC/logging.c#L190) function. 
+The default dump log function is [dump_log](logger/logger.c#L190) function. 
 ```cpp
 void dump_log(record_t *rec)
 {
@@ -146,12 +146,12 @@ You can change the dump log function by using `log_set_dump_fn(char* name, log_d
 ```cpp
 #include <stdio.h>
 #include <stdlib.h>
-#include "loggingC/logging.h"
+#include "logger/logger.h"
 
 int main(void)
 {
     char *f1 = "file1";
-    log_add_file_handler("loggingC/program.log", "w", LOG_WARN, f1);
+    log_add_file_handler("logger/program.log", "w", LOG_WARN, f1);
     log_set_fmt_fn(f1, no_color_fmt2);
     log_set_quiet("root", true);
 
@@ -164,7 +164,7 @@ int main(void)
     return 0;
 }
 ```
-You will only see the log messages in the file `loggingC/program.log` with the log level `WARN` and above. Nothing will appear in the console.
+You will only see the log messages in the file `logger/program.log` with the log level `WARN` and above. Nothing will appear in the console.
 
 ![example1.png](fig/example1.png)
 
@@ -174,14 +174,14 @@ Contributions are welcome! Please submit a pull request or open an issue on the 
 * Implement a filter function, like the [filter class](https://docs.python.org/3/library/logging.html#filter-objects) in Python's logging package, to filter log messages based on the maximum log level and handler name.
 * Make the sequential search of handlers more efficient, for example, hashing the handler names into id.
 * Prevent adding handlers with the same name.
-* Add more safety checks in [logging.c](loggingC/logging.c#L175) to ensure robustness and prevent potential issues.
+* Add more safety checks in [logger.c](logger/logger.c#L175) to ensure robustness and prevent potential issues.
 
 
 ## Reference
-* [log4.c](https://github.com/rxi/log.c) - The project that LoggingC based on.
+* [log4.c](https://github.com/rxi/log.c)
 * [Python logging module](https://docs.python.org/3/library/logging.html) - Comprehensive guide on Python's logging package.
 * [Logging in Python](https://realpython.com/python-logging/) - An article to introduce the logging package.
 
 
 ## License
-This library is free. You can redistribute and modify it under the MIT License. See the [LICENSE](https://github.com/JeepWay/loggingC/blob/master/LICENSE) for details.
+This library is free. You can redistribute and modify it under the MIT License. See the [LICENSE](LICENSE) for details.

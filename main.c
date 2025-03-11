@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "loggingC/logging.h"
+#include "logger/logger.h"
 
 void custom_fmt(record_t *rec, const char *time_buf)
 {
@@ -16,7 +16,7 @@ int main(void)
     // log_set_level("root", LOG_INFO); 
     
     /* 2. Add a file handler */
-    // log_add_file_handler("loggingC/program.log", "a", LOG_INFO, "file1");
+    // log_add_file_handler("logger/program.log", "a", LOG_INFO, "file1");
     
     /* 3. Add a stream handler */
     // log_add_stream_handler(DEFAULT, DEFAULT_LEVEL, "bash2");
@@ -35,7 +35,7 @@ int main(void)
 
     /* Example 1 */
     // char *f1 = "file1";
-    // log_add_file_handler("loggingC/program.log", "w", LOG_WARN, f1);
+    // log_add_file_handler("logger/program.log", "w", LOG_WARN, f1);
     // log_set_fmt_fn(f1, no_color_fmt2);
     // log_set_quiet("root", true);
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2025 JeepWay
  *
  * This library is free, you can redistribute and modify it
- * under the MIT License, see logging.c for details.
+ * under the MIT License, see logger.c for details.
  */
 
 #ifndef LOG_H
@@ -14,9 +14,9 @@
 #include <stdio.h>
 
 #if defined(__GNUC__) || defined(__clang__)
-#define __LOGGING_HAS_TYPEOF 1
+#define __LOGGER_HAS_TYPEOF 1
 #else
-#define __LOGGING_HAS_TYPEOF 0
+#define __LOGGER_HAS_TYPEOF 0
 #endif
 
 #define MAX_HANDLERS 29
@@ -26,7 +26,7 @@
 #define DEFAULT NULL
 #define DEFAULT_LEVEL LOG_INFO
 #define DEFAULT_STRAEM stderr
-#define DEFAULT_FILE_NAME "loggingC/program.log"
+#define DEFAULT_FILE_NAME "logger/program.log"
 #define DEFAULT_FILE_MODE "a"
 #define DEFAULT_DATE_FORMAT1 "%H:%M:%S"                  // HH:MM:SS
 #define DEFAULT_DATE_FORMAT2 "%Y-%m-%d"                  // YYYY-MM-DD
@@ -95,7 +95,7 @@ void _log_message(int level, const char *file, int line, const char *msg_fmt,
 #define log_fatal(...) _log_message(LOG_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 
 // methods to set handler properties
-#if __LOGGING_HAS_TYPEOF
+#if __LOGGER_HAS_TYPEOF
 #define _log_set_member(name, type, member, value)                          \
     ({                                                                      \
         typeof(((struct handler *) 0)->member) __tmp = (value);             \
